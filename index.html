@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Lounge - Login</title>
+  <style>
+    /* Preloader Styles */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999; /* Ensure it appears above other content */
+    }
+
+    #preloader img {
+      width: 150px;
+      height: auto;
+      animation: pulse 8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: url('https://www.citylounge.co.ke/wp-content/uploads/2025/01/clm_bg.webp') no-repeat center center / cover;
+	      }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      max-width: 800px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      flex: 1 1 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .logo img {
+      max-width: 100px;
+      height: auto;
+    }
+
+    .vl {
+      border-left: 2px solid #ddd;
+      margin: 0 20px;
+	  color: black;
+    }
+
+    .form-container {
+      flex: 2 1 300px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      color: #333;
+    }
+
+    h2 {
+      font-size: 1.4em;
+      color: #555;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #loginMessage {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .container {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      .vl {
+        display: none;
+      }
+
+      .logo {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <img src="https://www.citylounge.co.ke/wp-content/uploads/2025/01/burger-logo-Made-with-PosterMyWall.png" alt="City Lounge Logo">
+  </div>
+
+  <!-- Main Content -->
+  <div class="container" style="display: none;" id="mainContent">
+    <div class="logo">
+      <img src="https://www.citylounge.co.ke/wp-content/uploads/2025/01/burger-logo-Made-with-PosterMyWall.png" alt="City Lounge Logo">
+    </div>
+    <div class="vl"></div>
+    <div class="form-container">
+      <h1 id="greeting"></h1>
+      <h2>Welcome To</h2>
+      <h1>City Lounge Management System (CLMS)</h1>
+      <form id="loginForm" aria-label="Login Form">
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" aria-label="Login">Login</button>
+      </form>
+      <div id="loginMessage" role="alert"></div>
+    </div>
+  </div>
+
+  <script>
+    // Preloader functionality
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      const mainContent = document.getElementById('mainContent');
+
+      // Fade out preloader
+      preloader.style.transition = 'opacity 0.5s ease';
+      preloader.style.opacity = '0';
+
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        mainContent.style.display = 'flex';
+      }, 500);
+    });
+
+    // Set dynamic greeting based on time of day
+    function greet() {
+      const now = new Date();
+      const hours = now.getHours();
+      const greeting = hours < 12 ? "Good morning" : hours < 18 ? "Good afternoon" : "Good evening";
+      document.getElementById('greeting').textContent = `${greeting}!`;
+    }
+
+    greet(); // Call the greeting function on page load
+
+    // Login functionality
+    const loginForm = document.getElementById('loginForm');
+    const loginMessage = document.getElementById('loginMessage');
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent default form submission
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Simple authentication logic (replace with server-side validation)
+      if (username === 'manager' && password === 'manager') {
+        window.location.href = 'dashboard.html'; // Redirect to dashboard
+      } else {
+        loginMessage.textContent = "Invalid username or password.";
+      }
+    });
+  </script>
+</body>
+</html>
