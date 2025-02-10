@@ -111,9 +111,11 @@ body {
 }
 
 .vl {
-  border-left: 2px solid #ddd;
+  border-left: 3px solid rgba(255, 255, 255, 0.8); /* White for visibility */
+  height: 300px; /* Set a visible height */
   margin: 0 20px;
-  color: black;
+  opacity: 1; /* Ensure it's fully visible */
+  display: block; /* Ensure it's not collapsed */
 }
 
 .form-container {
